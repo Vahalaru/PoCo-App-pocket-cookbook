@@ -1,0 +1,128 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.devtools.ksp'
+}
+
+ext {
+    databaseVersion = '1.0.0-beta01'
+    firestoreVersion = '1.0.0-beta01'
+}
+
+android.applicationVariants.all { variant ->
+    kotlin.sourceSets {
+        def name = variant.name
+        getByName(name) {
+            kotlin.srcDir('build/generated/ksp/$name/kotlin')
+        }
+    }
+}
+/*kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
+}*/
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.broprogramming.poco"
+        minSdk 28
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    buildToolsVersion '31.0.0'
+}
+
+dependencies {
+
+    // Kotlin and others
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0'
+
+    // Utilities
+    implementation 'com.jakewharton.timber:timber:5.0.1' // Logging
+    //implementation 'io.github.raamcosta.compose-destinations:animations-core:1.2.2-beta' // Navigation
+    implementation 'io.github.raamcosta.compose-destinations:core:1.2.2-beta' // Navigation
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.2.2-beta' // Navigation
+
+    // Compose
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation "com.google.accompanist:accompanist-insets:0.24.0-alpha"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.1-alpha"
+
+    // Jetpack
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'com.google.dagger:hilt-android:2.40.5'
+    kapt 'com.google.dagger:hilt-compiler:2.40.5'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    implementation "androidx.navigation:navigation-compose:2.5.0-alpha01"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    implementation 'com.github.raipankaj:JetFirestore:1.0.3'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-firestore:24.0.1'
+    implementation "com.github.rosariopfernandes.firebase-compose:firestore:$firestoreVersion"
+    implementation 'com.google.firebase:firebase-common-ktx:20.0.0'
+    // FirebaseUI for Firebase
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.0'
+
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-pager:0.24.0-alpha"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.24.0-alpha"
+    implementation "com.google.accompanist:accompanist-navigation-material:0.24.1-alpha"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+}

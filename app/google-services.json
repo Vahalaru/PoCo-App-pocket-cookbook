@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "30868729795",
+    "firebase_url": "https://poco-f6160.firebaseio.com",
+    "project_id": "poco-f6160",
+    "storage_bucket": "poco-f6160.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30868729795:android:6fb8687d5bdb3b9bf45776",
+        "android_client_info": {
+          "package_name": "com.broprogramming.poco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30868729795-akbg2bahs6g73lqht8q8qo4ov1vtfv49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG-YxsmXAG2wkVZ5u-sWwh1uWYiDnobHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30868729795-akbg2bahs6g73lqht8q8qo4ov1vtfv49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
