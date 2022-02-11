@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.broprogramming.poco.repository.model.Ingredient
-import com.broprogramming.poco.repository.model.Recipe
-import com.broprogramming.poco.repository.model.Step
+import com.broprogramming.poco.model.Ingredient
+import com.broprogramming.poco.model.Recipe
+import com.broprogramming.poco.model.Step
 import com.broprogramming.poco.ui.theme.Black
 import com.broprogramming.poco.ui.theme.Purple200
 import com.broprogramming.poco.ui.theme.Purple800
@@ -25,8 +25,10 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import com.ramcosta.composedestinations.annotation.Destination
 import timber.log.Timber
 
+@Destination(route = "recipe")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun RecipeDetailsUI(viewModel: RecipeDetailsViewModel) {

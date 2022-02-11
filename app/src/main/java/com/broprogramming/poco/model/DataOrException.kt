@@ -1,4 +1,4 @@
-package com.broprogramming.poco.repository.model
+package com.broprogramming.poco.model
 
 data class DataOrException<T, E : Exception?>(
     var data: T? = null,

@@ -1,4 +1,4 @@
-package com.broprogramming.poco.repository.model
+package com.broprogramming.poco.model
 
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot

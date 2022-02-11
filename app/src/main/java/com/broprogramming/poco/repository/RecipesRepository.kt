@@ -1,7 +1,7 @@
 package com.broprogramming.poco.repository
 
-import com.broprogramming.poco.repository.model.DataOrException
-import com.broprogramming.poco.repository.model.Recipes
+import com.broprogramming.poco.model.DataOrException
+import com.broprogramming.poco.model.Recipes
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await

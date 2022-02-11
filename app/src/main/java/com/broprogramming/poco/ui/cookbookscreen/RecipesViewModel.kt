@@ -2,7 +2,7 @@ package com.broprogramming.poco.ui.cookbookscreen
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.broprogramming.poco.repository.model.Recipes
+import com.broprogramming.poco.model.Recipes
 import com.broprogramming.poco.repository.RecipesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flow

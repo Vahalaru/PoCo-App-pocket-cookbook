@@ -12,25 +12,6 @@ ext {
     firestoreVersion = '1.0.0-beta01'
 }
 
-android.applicationVariants.all { variant ->
-    kotlin.sourceSets {
-        def name = variant.name
-        getByName(name) {
-            kotlin.srcDir('build/generated/ksp/$name/kotlin')
-        }
-    }
-}
-/*kotlin {
-    sourceSets {
-        debug {
-            kotlin.srcDir("build/generated/ksp/debug/kotlin")
-        }
-        release {
-            kotlin.srcDir("build/generated/ksp/release/kotlin")
-        }
-    }
-}*/
-
 android {
     compileSdk 31
 
@@ -48,7 +29,19 @@ android {
     }
 
     buildTypes {
+        debug {
+            sourceSets {
+                main {
+                    kotlin.srcDir("build/generated/ksp/debug/kotlin")
+                }
+            }
+        }
         release {
+            sourceSets {
+                main {
+                    kotlin.srcDir("build/generated/ksp/release/kotlin")
+                }
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
