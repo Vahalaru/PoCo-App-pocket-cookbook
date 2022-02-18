@@ -28,7 +28,13 @@ class RecipesViewModel @Inject constructor(
 
         emit(rList)
     }
+
     init {
         Timber.d("RecipesViewModel: init")
     }
+
+ /*   fun onItemClicked(item: Recipes) {
+        Timber.d("RecipesViewModel: onItemClicked: $item")
+        DestinationsNavigator.navigate("/recipe/${item.id}")
+    }*/
 }

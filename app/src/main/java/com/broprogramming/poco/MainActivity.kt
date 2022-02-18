@@ -10,7 +10,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.broprogramming.poco.drawer.DrawerLayout
 import com.broprogramming.poco.drawer.TopBar
@@ -43,10 +42,4 @@ fun MainLayout() {
     ) {
         ComposeNavigation(navController = navController)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainLayoutPreview() {
-    MainLayout()
 }

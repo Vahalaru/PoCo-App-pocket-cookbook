@@ -11,19 +11,23 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.broprogramming.poco.R
+import com.broprogramming.poco.ui.destinations.DirectionDestination
+import com.broprogramming.poco.ui.destinations.HomeScreenDestination
+import com.broprogramming.poco.ui.destinations.RecipeListUiDestination
+import com.ramcosta.composedestinations.navigation.navigateTo
+import com.ramcosta.composedestinations.spec.Direction
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun DrawerLayout(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: NavController) {
     val items = listOf(
         NavDrawerItem.Home,
-        NavDrawerItem.Cookbook,
-        NavDrawerItem.RecipeDetails
+        NavDrawerItem.Cookbook
     )
 
     Column{
         Image(
-            painter = painterResource(id = R.drawable.launcher_icon),
+            painter = painterResource(id = R.drawable.ic_my_launcher),
             contentDescription = "",
             modifier = Modifier
                 .height(100.dp)
@@ -39,7 +43,8 @@ fun DrawerLayout(scope: CoroutineScope, scaffoldState: ScaffoldState, navControl
 
         items.forEach { item ->
             DrawerItem(item = item, selected = currentRoute == item.route, onItemClick =  {
-                navController.navigate(item.route){
+                //navController.navigateTo(dynamicNavigation(item.route))//{
+                navController.navigateTo(dynamicNavigation(item.route)){//item.route){
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route){
                             saveState = true
@@ -51,4 +56,13 @@ fun DrawerLayout(scope: CoroutineScope, scaffoldState: ScaffoldState, navControl
             })
         }
     }
+}
+
+private fun dynamicNavigation(route: String): Direction {
+    var directionDestination: DirectionDestination = HomeScreenDestination()
+    when (route) {
+        NavDrawerItem.Home.route -> directionDestination =  HomeScreenDestination()
+        NavDrawerItem.Cookbook.route -> directionDestination = RecipeListUiDestination()
+    }
+    return directionDestination
 }

@@ -2,6 +2,7 @@ package com.broprogramming.poco.di
 
 import com.broprogramming.poco.utility.Constants.NAME_PROPERTY
 import com.broprogramming.poco.utility.Constants.RECIPES_COLLECTION
+import com.broprogramming.poco.utility.Constants.RECIPE_DETAILS
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query.Direction.ASCENDING
 import dagger.Module
@@ -19,5 +20,5 @@ object AppModule {
         .orderBy(NAME_PROPERTY, ASCENDING)
     @Provides
     @Singleton
-    fun provideFirebaseFirestore() = FirebaseFirestore.getInstance()
+    fun provideQueryRecipeById() = FirebaseFirestore.getInstance().collection(RECIPE_DETAILS)
 }

@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RecipesRepository @Inject constructor(
-    internal val queryRecipesByName: Query
+    internal val queryRecipesByName: Query,
 ){
     suspend fun getRecipesFromFirestore(): DataOrException<List<Recipes>, Exception> {
         val dataOrException = DataOrException<List<Recipes>, Exception>()

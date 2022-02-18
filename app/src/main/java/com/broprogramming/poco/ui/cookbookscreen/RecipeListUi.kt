@@ -1,6 +1,5 @@
 package com.broprogramming.poco.ui.cookbookscreen
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.Center
@@ -22,29 +21,34 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.broprogramming.poco.model.Recipes
 import com.broprogramming.poco.ui.CircularProgressBar
+import com.broprogramming.poco.ui.destinations.RecipeDetailsUIDestination
 import com.broprogramming.poco.ui.theme.Black
 import com.broprogramming.poco.ui.theme.Purple200
 import com.broprogramming.poco.ui.theme.Purple800
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.navigateTo
 import timber.log.Timber
 
-@Destination(route = "cookbook")
+@Destination(route =
+"cookbook")
 @Composable
-fun RecipeListUi(
-    newViewModel: RecipesViewModel,
-) {
+fun RecipeListUi(navController: NavController) {
+    val newViewModel = hiltViewModel<RecipesViewModel>()
+
 
     val recipeList by newViewModel.itemsFlow.collectAsState(initial = emptyList())
-    val list: List<Recipes> = recipeList
-    Timber.d("RecipeListUi flow list: $list")
+    Timber.d("RecipeListUi flow list: $recipeList")
     val context = LocalContext.current
 
     LazyColumn{
-        items(items = list) { recipe ->
+        items(items = recipeList) { recipe ->
             RecipeListItem(recipe = recipe, onClick = {
-                Toast.makeText(context, "DocResource Id: (as string) ${recipe.recipe_details_id.toString()}", Toast.LENGTH_LONG).show() })
+                navController.navigateTo(RecipeDetailsUIDestination())//recipe.recipe_details_id)) //recipe.recipe_details_id))
+            })//Toast.makeText(context, "DocResource Id: (as string) ${recipe.recipe_details_id.toString()}", Toast.LENGTH_LONG).show() })
         }
     }
     Column(

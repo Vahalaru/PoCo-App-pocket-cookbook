@@ -1,10 +1,7 @@
 package com.broprogramming.poco.ui.recipedetailsscreen
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,9 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import com.broprogramming.poco.model.Ingredient
 import com.broprogramming.poco.model.Recipe
+import com.broprogramming.poco.model.RecipeDetailsScreenNavArgs
 import com.broprogramming.poco.model.Step
+import com.broprogramming.poco.ui.CircularProgressBar
 import com.broprogramming.poco.ui.theme.Black
 import com.broprogramming.poco.ui.theme.Purple200
 import com.broprogramming.poco.ui.theme.Purple800
@@ -28,28 +29,29 @@ import com.google.accompanist.pager.rememberPagerState
 import com.ramcosta.composedestinations.annotation.Destination
 import timber.log.Timber
 
-@Destination(route = "recipe")
+@Destination(route = "recipe", navArgsDelegate = RecipeDetailsScreenNavArgs::class)
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun RecipeDetailsUI(viewModel: RecipeDetailsViewModel) {
-    val recipe by viewModel.itemFlow.collectAsState(initial = Recipe(recipeDescription = "test", recipeName = "tester", recipeIngredients = listOf(Ingredient(ingredientName = "test ing", ingredientQuantity = "1", ingredientMeasurement = "cup")), recipeSteps = listOf(
-        Step(step = "1. test description")
-    ))
-    )
-    val item: Recipe = recipe as Recipe
+fun RecipeDetailsUI() {
+    val viewModel = hiltViewModel<RecipeDetailsViewModel>()
 
-    Timber.d("RecipeDetailsUI: $item")
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Recipe") },
-                backgroundColor = Purple800
+    val recipe by viewModel.recipe.collectAsState(initial = Recipe())
+    Timber.d("RecipeDetailsUI: $recipe")
+
+    Column() {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            CircularProgressBar(
+                isDisplayed = viewModel.loading.value
             )
-        },
-        content = {
-            tabsWithSwiping(recipe = item)
+            tabsWithSwiping(viewModel, recipe = recipe)
         }
-    )
+
+    }
+
 }
 
 @Composable
@@ -91,7 +93,7 @@ fun RecipeNameAndDescriptionCard(recipe: Recipe) {
 
 @ExperimentalPagerApi
 @Composable
-fun tabsWithSwiping(recipe: Recipe) {
+fun tabsWithSwiping(viewmodel: ViewModel, recipe: Recipe?) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf("Ingredients", "Steps")
     val pagerState = rememberPagerState() // 2.
@@ -120,8 +122,8 @@ fun tabsWithSwiping(recipe: Recipe) {
         ) { tabIndex ->
             // Determine which screen to show based on the current tab index.
             when (tabIndex) {
-                0 -> ingredientListComponent(ingredients = recipe.recipeIngredients!!)
-                1 -> stepListComponent(steps = recipe.recipeSteps!!)
+                0 -> ingredientListComponent(ingredients = recipe?.recipeIngredients!!)
+                1 -> stepListComponent(steps = recipe?.recipeSteps!!)
             }
         }
     }
