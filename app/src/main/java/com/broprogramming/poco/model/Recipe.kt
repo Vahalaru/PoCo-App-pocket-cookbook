@@ -4,12 +4,12 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
 
 data class Recipe(
-    var recipeCategory: String = "",
-    var recipeId: String = "",
-    var recipeName: String = "",
-    var recipeDescription: String = "",
-    var recipeIngredients: List<Ingredient>? = null,
-    var recipeSteps: List<Step>? = null,
+    var category: String = "",
+    var recipe_name: String = "",
+    var description: String = "",
+    var recipe_added_by: String = "",
+    var ingredients: List<Ingredient>? = null,
+    var recipe_steps: List<Step>? = null,
     var id: String = "",
 ){
     companion object{

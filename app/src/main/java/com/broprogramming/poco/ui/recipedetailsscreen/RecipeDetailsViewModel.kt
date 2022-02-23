@@ -1,12 +1,11 @@
 package com.broprogramming.poco.ui.recipedetailsscreen
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.broprogramming.poco.model.Recipe
-import com.broprogramming.poco.model.RecipeDetailsScreenNavArgs
-import com.broprogramming.poco.ui.destinations.RecipeDetailsUIDestination.argsFrom
+import com.broprogramming.poco.repository.RecipeRepository
+import com.broprogramming.poco.ui.destinations.RecipeDetailsUIDestination
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jet.firestore.getObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,24 +17,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecipeDetailsViewModel @Inject constructor(
-//    private val repo: RecipeRepository,
+    private val repo: RecipeRepository,
+    savedStateHandle: SavedStateHandle
 
 ) : ViewModel() {
 
-    val recId = RecipeDetailsScreenNavArgs().recipeId
-    val test2 = argsFrom(savedStateHandle = rememberSaveableStateHolder())
-
+    private val recId = RecipeDetailsUIDestination.argsFrom(savedStateHandle).recipeId
 
     private val firebaseFirestore = FirebaseFirestore.getInstance()
     private val recipeCollection = firebaseFirestore.collection("cookbook")
+    private val recipeDocument = recipeCollection.document(recId)
 
-
+    internal val recipeDetailsId = recId
 
     var loading = mutableStateOf(false)
 
     val recipe = flow {
         loading.value = true
-        val recipe = recipeCollection.document(argsFrom(savedStateHandle = SavedStateHandle()).recipeId.toString()).get().await().getObject<Recipe>()//getRecipe(recipeDetailsScreenNavArgs.recipeId).await()
+        //val recipe = documentStateOf(recipeDocument)
+        var recipe = recipeDocument.get().await().getObject<Recipe>()
         loading.value = false
         Timber.d("Recipe: $recipe")
 
@@ -44,9 +44,6 @@ class RecipeDetailsViewModel @Inject constructor(
 
     init {
         Timber.d("RecipeDetailsViewModel init")
-    }
-    private fun getRecipe(rId: String): String {
-        return rId
     }
 
 }

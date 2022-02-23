@@ -47,7 +47,7 @@ fun RecipeListUi(navController: NavController) {
     LazyColumn{
         items(items = recipeList) { recipe ->
             RecipeListItem(recipe = recipe, onClick = {
-                navController.navigateTo(RecipeDetailsUIDestination())//recipe.recipe_details_id)) //recipe.recipe_details_id))
+                navController.navigateTo(RecipeDetailsUIDestination(recipeId = recipe.recipe_details_id))//recipe.recipe_details_id)) //recipe.recipe_details_id))
             })//Toast.makeText(context, "DocResource Id: (as string) ${recipe.recipe_details_id.toString()}", Toast.LENGTH_LONG).show() })
         }
     }

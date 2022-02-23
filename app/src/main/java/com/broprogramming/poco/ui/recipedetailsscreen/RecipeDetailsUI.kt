@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import com.broprogramming.poco.model.Ingredient
 import com.broprogramming.poco.model.Recipe
 import com.broprogramming.poco.model.RecipeDetailsScreenNavArgs
@@ -36,18 +35,19 @@ fun RecipeDetailsUI() {
     val viewModel = hiltViewModel<RecipeDetailsViewModel>()
 
     val recipe by viewModel.recipe.collectAsState(initial = Recipe())
-    Timber.d("RecipeDetailsUI: $recipe")
+    Timber.d("RecipeDetailsUI: recipeId = ${viewModel.recipeDetailsId}")
 
     Column() {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             CircularProgressBar(
                 isDisplayed = viewModel.loading.value
             )
-            tabsWithSwiping(viewModel, recipe = recipe)
+            Timber.d("RecipeDetailsUI: recipe = $recipe")
+            recipe?.let { TabsWithSwiping(recipe = it) }
         }
 
     }
@@ -73,7 +73,7 @@ fun RecipeNameAndDescriptionCard(recipe: Recipe) {
                     .padding(4.dp),
             ) {
                 Text(
-                    text = recipe.recipeName,
+                    text = recipe.recipe_name,
                     fontWeight = FontWeight.ExtraBold
                 )
             }
@@ -83,7 +83,7 @@ fun RecipeNameAndDescriptionCard(recipe: Recipe) {
                     .padding(4.dp),
             ) {
                 Text(
-                    text = recipe.recipeDescription,
+                    text = recipe.description,
                     fontWeight = FontWeight.SemiBold
                 )
             }
@@ -93,12 +93,12 @@ fun RecipeNameAndDescriptionCard(recipe: Recipe) {
 
 @ExperimentalPagerApi
 @Composable
-fun tabsWithSwiping(viewmodel: ViewModel, recipe: Recipe?) {
+fun TabsWithSwiping(recipe: Recipe) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf("Ingredients", "Steps")
     val pagerState = rememberPagerState() // 2.
     Column {
-        RecipeNameAndDescriptionCard(recipe = Recipe("", "Grilled Cheese", "Grilled Cheese", recipeDescription = "Grilled Cheese"))
+        RecipeNameAndDescriptionCard(recipe = recipe)
         TabRow(selectedTabIndex = tabIndex,
             indicator = { tabPositions -> // 3.
                 TabRowDefaults.Indicator(
@@ -122,54 +122,58 @@ fun tabsWithSwiping(viewmodel: ViewModel, recipe: Recipe?) {
         ) { tabIndex ->
             // Determine which screen to show based on the current tab index.
             when (tabIndex) {
-                0 -> ingredientListComponent(ingredients = recipe?.recipeIngredients!!)
-                1 -> stepListComponent(steps = recipe?.recipeSteps!!)
+                0 -> recipe.ingredients?.let { IngredientListComponent(ingredients = it) }
+                1 -> recipe.recipe_steps?.let { StepListComponent(steps = it) }
             }
         }
     }
 }
 
 @Composable
-fun ingredientListComponent(ingredients: List<Ingredient>) {
-    LazyColumn {
+fun IngredientListComponent(ingredients: List<Ingredient>) {
+    LazyColumn (
+        modifier = Modifier.fillMaxSize(),
+            ){
         items(items = ingredients) {
-            ingredientRow(ingredient = it)
+            IngredientRow(ingredient = it)
         }
     }
 }
 
 @Composable
-fun ingredientRow(ingredient: Ingredient){
+fun IngredientRow(ingredient: Ingredient){
     Row(
         modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth(),
     ) {
-        Text(text = "${ingredient.ingredientQuantity}  ${ingredient.ingredientMeasurement} ${ingredient.ingredientName}")
+        Text(text = "${ingredient.ingredient_quantity}  ${ingredient.ingredient_measurement} ${ingredient.ingredient_name}")
     }
 }
 
 @Composable
 @Preview
-fun ingredientListComponentPreview() {
-    ingredientListComponent(ingredients = listOf(Ingredient("cup", "crap", "1"), Ingredient("given", "shits", "2")))
+fun IngredientListComponentPreview() {
+    IngredientListComponent(ingredients = listOf(Ingredient("cup", "crap", "1"), Ingredient("given", "shits", "2")))
 }
 
 @Composable
-fun stepListComponent(steps: List<Step>) {
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+fun StepListComponent(steps: List<Step>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+    ) {
         items(items = steps){
-            stepRow(step = it)
+            StepRow(step = it)
         }
     }
 }
 @Composable
-fun stepRow(step: Step){
+fun StepRow(step: Step){
     Row(
         modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth(),
     ) {
-        Text(text = "${step.step}")
+        Text(text = "${step.step_num}. ${step.step_info}")
     }
 }

@@ -6,7 +6,7 @@ import com.google.firebase.firestore.ktx.toObject
 data class Recipes(
     var recipe_description: String = "",
     var recipe_name: String = "",
-    var recipe_details_id: String? = null,
+    var recipe_details_id: String = "",
     var category:String? = null,
     var id: String? = null
 ) {

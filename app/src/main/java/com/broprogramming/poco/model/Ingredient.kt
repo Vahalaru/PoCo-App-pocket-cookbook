@@ -1,3 +1,3 @@
 package com.broprogramming.poco.model
 
-data class Ingredient(var ingredientMeasurement: String? = null, var ingredientName: String? = null, var ingredientQuantity: String? = null)
+data class Ingredient(var ingredient_measurement: String = "", var ingredient_name: String = "", var ingredient_quantity: String = "")
