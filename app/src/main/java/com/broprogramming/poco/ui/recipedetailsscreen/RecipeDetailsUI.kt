@@ -49,9 +49,7 @@ fun RecipeDetailsUI() {
             Timber.d("RecipeDetailsUI: recipe = $recipe")
             recipe?.let { TabsWithSwiping(recipe = it) }
         }
-
     }
-
 }
 
 @Composable

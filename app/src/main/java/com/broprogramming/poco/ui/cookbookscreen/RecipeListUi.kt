@@ -17,7 +17,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -31,7 +30,7 @@ import com.broprogramming.poco.ui.theme.Purple200
 import com.broprogramming.poco.ui.theme.Purple800
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.navigateTo
-import timber.log.Timber
+
 
 @Destination(route =
 "cookbook")
@@ -39,27 +38,7 @@ import timber.log.Timber
 fun RecipeListUi(navController: NavController) {
     val newViewModel = hiltViewModel<RecipesViewModel>()
 
-
-    val recipeList by newViewModel.itemsFlow.collectAsState(initial = emptyList())
-    Timber.d("RecipeListUi flow list: $recipeList")
-    val context = LocalContext.current
-
-    LazyColumn{
-        items(items = recipeList) { recipe ->
-            RecipeListItem(recipe = recipe, onClick = {
-                navController.navigateTo(RecipeDetailsUIDestination(recipeId = recipe.recipe_details_id))//recipe.recipe_details_id)) //recipe.recipe_details_id))
-            })//Toast.makeText(context, "DocResource Id: (as string) ${recipe.recipe_details_id.toString()}", Toast.LENGTH_LONG).show() })
-        }
-    }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        CircularProgressBar(
-            isDisplayed = newViewModel.loading.value
-        )
-    }
+    RecipeListUiScreen(navController = navController, newViewModel = newViewModel)
 }
 
 @Composable
@@ -109,3 +88,67 @@ private fun RecipeListItem(
         }
     }
 }
+@Composable
+private fun RecipeListUiScreen(navController: NavController, newViewModel: RecipesViewModel) {
+    val recipeList by newViewModel.itemsFlow.collectAsState(initial = emptyList())
+
+    LazyColumn {
+        items(items = recipeList) { recipe ->
+            RecipeListItem(recipe = recipe, onClick = {
+                navController.navigateTo(RecipeDetailsUIDestination(recipeId = recipe.recipe_details_id))
+            })
+        }
+    }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressBar(
+            isDisplayed = newViewModel.loading.value
+        )
+    }
+}
+
+/*
+@Composable
+private fun AdminRecipeList(){
+    val recipeList by newViewModel.itemsFlow.collectAsState(initial = emptyList())
+    Timber.d("RecipeListUi flow list: $recipeList")
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { */
+/*TODO*//*
+ },
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_plus),
+                        contentDescription = null
+                    )
+                }
+            )
+        },
+        content = {
+            Surface(){
+                LazyColumn{
+                    items(items = recipeList) { recipe ->
+                        RecipeListItem(recipe = recipe, onClick = {
+                            navController.navigateTo(RecipeDetailsUIDestination(recipeId = recipe.recipe_details_id))
+                        })
+                    }
+                }
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    CircularProgressBar(
+                        isDisplayed = newViewModel.loading.value
+                    )
+                }
+            }
+        }
+    )
+}*/

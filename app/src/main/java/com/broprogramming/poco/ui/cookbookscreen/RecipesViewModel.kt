@@ -32,9 +32,4 @@ class RecipesViewModel @Inject constructor(
     init {
         Timber.d("RecipesViewModel: init")
     }
-
- /*   fun onItemClicked(item: Recipes) {
-        Timber.d("RecipesViewModel: onItemClicked: $item")
-        DestinationsNavigator.navigate("/recipe/${item.id}")
-    }*/
 }
