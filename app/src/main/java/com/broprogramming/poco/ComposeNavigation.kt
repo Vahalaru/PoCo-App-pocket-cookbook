@@ -9,13 +9,6 @@ import com.ramcosta.composedestinations.navigation.dependency
 
 @Composable
 fun ComposeNavigation(navController: NavHostController) {
-/*    DestinationsNavHost(
-        dependenciesContainerBuilder = {
-            dependency(navController)
-        },
-        navGraph = NavGraphs.root
-    )*/
-
     DestinationsNavHost(NavGraphs.root, navController = navController,
     dependenciesContainerBuilder = {
         dependency(Recipe)

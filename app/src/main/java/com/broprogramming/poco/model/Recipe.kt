@@ -4,7 +4,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
 
 data class Recipe(
-    var category: String = "",
+    var category: List<Category>? = null,
     var recipe_name: String = "",
     var description: String = "",
     var recipe_added_by: String = "",
