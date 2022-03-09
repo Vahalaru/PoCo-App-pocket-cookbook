@@ -1,5 +1,6 @@
 package com.broprogramming.poco
 
+//import com.broprogramming.poco.drawer.DrawerLayout
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.compose.rememberNavController
-import com.broprogramming.poco.drawer.DrawerLayout
 import com.broprogramming.poco.drawer.TopBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,9 +35,9 @@ fun MainLayout() {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopBar(scope = scope, scaffoldState = scaffoldState) },
-        drawerBackgroundColor = colorResource(id = R.color.purple_700),
+        drawerBackgroundColor = colorResource(id = R.color.purple_500),
         drawerContent = {
-            DrawerLayout(scope = scope, scaffoldState = scaffoldState, navController = navController)
+            //DrawerLayout(scope = scope, scaffoldState = scaffoldState, navController = navController)
         },
     ) {
         ComposeNavigation(navController = navController)

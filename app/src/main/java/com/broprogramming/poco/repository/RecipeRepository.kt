@@ -1,12 +1,9 @@
 package com.broprogramming.poco.repository
 
-import com.google.firebase.firestore.Query
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RecipeRepository @Inject constructor(
-    internal val queryRecipeById: Query
-){
-
-}
+   // internal val queryRecipeById: Query
+)

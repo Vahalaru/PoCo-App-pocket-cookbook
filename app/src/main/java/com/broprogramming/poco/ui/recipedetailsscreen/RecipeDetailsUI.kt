@@ -140,12 +140,15 @@ fun IngredientListComponent(ingredients: List<Ingredient>) {
 
 @Composable
 fun IngredientRow(ingredient: Ingredient){
-    Row(
-        modifier = Modifier
-            .padding(4.dp)
-            .fillMaxWidth(),
-    ) {
-        Text(text = "${ingredient.ingredient_quantity}  ${ingredient.ingredient_measurement} ${ingredient.ingredient_name}")
+    Card(modifier = Modifier.padding(6.dp),
+    elevation = 6.dp,) {
+        Row(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth(),
+        ) {
+            Text(text = "${ingredient.ingredient_quantity}  ${ingredient.ingredient_measurement} ${ingredient.ingredient_name}")
+        }
     }
 }
 
@@ -167,11 +170,13 @@ fun StepListComponent(steps: List<Step>) {
 }
 @Composable
 fun StepRow(step: Step){
-    Row(
-        modifier = Modifier
-            .padding(4.dp)
-            .fillMaxWidth(),
-    ) {
-        Text(text = "${step.step_num}. ${step.step_info}")
+    Card(modifier = Modifier.padding(6.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth(),
+        ) {
+            Text(text = "${step.step_num}. ${step.step_info}")
+        }
     }
 }
